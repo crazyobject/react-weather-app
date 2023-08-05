@@ -1,0 +1,11 @@
+.parentContainer{
+    background-color: white !important;
+    border-radius: 25px;
+    margin-top: 50px;
+    margin-bottom: 60px;
+    padding: 30px;
+    border: 1px solid #ddf;
+}
+.parentContainer > .row{
+    margin-bottom: 30px;
+}

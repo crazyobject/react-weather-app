@@ -1,0 +1,30 @@
+.gradient-custom {
+/* fallback for old browsers */
+background: #ffffff;
+
+/* Chrome 10-25, Safari 5.1-6 */
+background: -webkit-linear-gradient(to right, rgba(255, 255, 255, 1), rgba(255, 236, 210, 1));
+
+/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+background: linear-gradient(to right, rgba(255, 255, 255, 1), rgba(255, 236, 210, 1))
+}
+
+.carousel-indicators li {
+background-color: #282828;
+width: 7px;
+height: 7px;
+border-radius: 50%;
+}
+
+.carousel{
+    border-radius:25px;
+    background-color: #C1CFEA;
+    padding:20px;
+    border:1px solid #ccc;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.tableBg{
+    background-color: #C1CFEA !important;
+    --bs-table-bg: #C1CFEA !important;
+}
