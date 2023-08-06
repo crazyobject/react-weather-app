@@ -4,6 +4,10 @@ import "./WeatherCard.css";
 const WeatherCard = ((props)=>{
     const {weatherData} = props;
     
+    if(weatherData.error!==undefined){
+      return (<div>{weatherData.error}</div>);
+    }
+    
     let image;
     if(Object.keys(weatherData).length!==0){
         image = `http://openweathermap.org/img/w/${weatherData.weather[0].icon}.png`;
@@ -17,6 +21,7 @@ return (
     <div class="row d-flex justify-content-center align-items-center h-100" style={{color:"#282828"}}>
       <div class="col-md-15 col-lg-17 col-xl-15">
         <div>
+          
           <div class="card-body m-2">
             <div id="demo1" class="carousel slide" data-ride="carousel">
               <div class="carousel-inner">

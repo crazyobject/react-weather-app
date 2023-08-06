@@ -7,6 +7,7 @@ import WeatherForm from './WeatherForm/WeatherForm';
 import WeatherCard from "./WeatherCard/WeatherCard";
 import "./Weather.css";
 
+
 const AppHeader = (()=>{
     // pure react component
     return (
@@ -14,8 +15,29 @@ const AppHeader = (()=>{
     );
 });
 
+const reducer = ((state,action)=>{
+    switch(action.type){
+        case "FETCH_SUCCESS" :
+        const weatherData = action.data;     
+        return {
+            cityName:weatherData.name,
+            clouds:weatherData.clouds,
+            wind:weatherData.wind,
+            visibility:weatherData.visibility,
+            main:weatherData.main,
+            weather:weatherData.weather,
+          };
+          case "FETCH_ERROR" :   
+          return {
+            error:action.error,
+          }
+          default : return state;
+    }
+
+})
+
 const Weather=(()=>{
-    const [weatherData,setWeatherData] = React.useState({});
+    const [weatherData,dispatch] = React.useReducer(reducer,{});
     return(
         <>
             <Container className="parentContainer">
@@ -26,7 +48,7 @@ const Weather=(()=>{
                 </Row>
                 <Row>
                     <Col>
-                        <WeatherForm setWeatherData={setWeatherData}/>
+                        <WeatherForm dispatch={dispatch}/>
                     </Col>
                 </Row>
                 <Row>

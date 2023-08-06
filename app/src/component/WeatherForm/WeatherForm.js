@@ -3,6 +3,7 @@ import {Row,Col,Container,Button} from 'react-bootstrap';
 import {useFormik} from "formik";
 import * as Yup from "yup";
 import AppConfig from "../../AppConfig";
+import axios from "axios";
 
 const initialValues = {
     city:"",
@@ -12,24 +13,20 @@ const validation = Yup.object({
     city:Yup.string().min(3).required(),
 });
 
-const WeatherForm = ((props)=>{
-    const {setWeatherData} = props;
+const WeatherForm = ((props)=>{ 
+    const {dispatch} = props;
     const {values,errors,touched,handleSubmit,handleBlur,handleChange,handleReset} = useFormik({
         initialValues,
         validationSchema:validation,
         onSubmit:(values,action)=>{
-           action.resetForm();
-           // move this in hook
-           fetch(`${AppConfig.baseUrl}weather?q=${values.city}&appid=${AppConfig.apiKey}&units=metric`).then(response => response.json()).then((json)=>{
-            setWeatherData({
-                cityName:json.name+", "+json.sys.country,
-                clouds:json.clouds,
-                wind:json.wind,
-                visibility:json.visibility,
-                main:json.main,
-                weather:json.weather,
-              });
-           });
+           axios.get(`${AppConfig.baseUrl}weather?q=${values.city}&appid=${AppConfig.apiKey}&units=metric`).then((response) => { 
+            dispatch({type:"FETCH_SUCCESS",data:response.data,isLoading:false});
+          }).catch(error => {
+            console.error(error);
+            dispatch({type:"FETCH_ERROR",error:error.response.data.message,isLoading:false});
+        });
+          action.resetForm();
+           
         }
     });
 
@@ -48,7 +45,7 @@ const WeatherForm = ((props)=>{
                     <Col>
                         <div class="btn-group" role="group" aria-label="Basic example">
                             <Button type="button"  onClick={()=>{handleSubmit()}} class="btn btn-primary">Fetch</Button>
-                            <Button type="button" onClick={()=>{handleReset();setWeatherData({})}} variant="secondary">Clear</Button>
+                            <Button type="button" onClick={()=>{handleReset();}} variant="secondary">Clear</Button>
                         </div>
                     </Col>
                 </Row>
